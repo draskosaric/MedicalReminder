@@ -9,14 +9,18 @@ import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
 
+    private TextView txtNumberOfAlarms;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // first locate textview
-        TextView txtHelloWorld = (TextView) findViewById(R.id.txtHelloWorld);
-        // set text to textview
-        txtHelloWorld.setText(getText(R.string.blog_rules));
+        initViews();
+    }
+
+    private void initViews() {
+        txtNumberOfAlarms = (TextView) findViewById(R.id.number_of_alarms);
+        txtNumberOfAlarms.setText(getString(R.string.none));
     }
 
 

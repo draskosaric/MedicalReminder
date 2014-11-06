@@ -4,6 +4,9 @@
     <string name="app_name">Medical Reminder</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="blog_rules">This blog really rulez! :)</string>
+    <string name="add_button_title">+</string>
+
+    <string name="label_number_of_alarms">Number of medications:</string>
+    <string name="none">none</string>
 
 </resources>
