@@ -25,4 +25,10 @@
         android:layout_below="@id/label_number_of_alarms"
         ></ListView>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/label_number_of_alarms"
+        />
+
 </RelativeLayout>

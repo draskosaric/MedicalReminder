@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="@dimen/image_row_width"
+        android:layout_height="@dimen/image_row_height"
+        android:id="@+id/imageMedicineType"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/med_types_0"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtMedicineName"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imageMedicineType"
+        android:layout_toEndOf="@+id/imageMedicineType" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtDosage"
+        android:layout_below="@id/txtMedicineName"
+        android:layout_alignLeft="@id/txtMedicineName"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtNextTimeOfAlarm"
+        android:layout_below="@id/txtDosage"
+        android:layout_alignLeft="@id/txtDosage"
+        />
+</RelativeLayout>
