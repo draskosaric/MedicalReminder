@@ -41,6 +41,7 @@ public class MainActivity extends ActionBarActivity {
     private void initViews() {
         txtNumberOfAlarms = (TextView) findViewById(R.id.number_of_alarms);
         txtNumberOfAlarms.setText(getString(R.string.none));
+
     }
 
     private void showData() {
@@ -124,6 +125,14 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private static class ViewHolder {
+        public ImageView imageMedicineType;
+        public TextView txtMedicineName;
+        public TextView txtDosage;
+        public TextView txtNextTimeOfAlarm;
+    }
+
+
     private class CustomAdapter extends BaseAdapter {
         @Override
         public int getCount() {
@@ -143,31 +152,32 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View row = convertView;
+            ViewHolder viewHolder;
+
             // if row is not created yet, now is the time
             if (row == null) {
                 row = getLayoutInflater().inflate(R.layout.row_alarms, parent, false);
             }
 
+            if (row.getTag() == null) {
+                viewHolder = new ViewHolder();
+                viewHolder.imageMedicineType = (ImageView) row.findViewById(R.id.imageMedicineType);
+                viewHolder.txtMedicineName = (TextView) row.findViewById(R.id.txtMedicineName);
+                viewHolder.txtDosage = (TextView) row.findViewById(R.id.txtDosage);
+                viewHolder.txtNextTimeOfAlarm = (TextView) row.findViewById(R.id.txtNextTimeOfAlarm);
+                row.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) row.getTag();
+            }
+
             AlarmTime currentAlarmTime = alarmTimes.get(position);
 
-            // Locate ImageView
-            // !!!! IMPORTANT !!!!
-            // Don't call simple findViewById method (which actually asks activity to locate view in its layout),
-            // but call row's findViewById to locate view in its layout
-            ImageView medicineTypeIcon = (ImageView) row.findViewById(R.id.imageMedicineType);
-
-            // Standard way for retrieving images if its identifier is dynamically determined and setting it
-            // (You could create some additional method that will, based on medicine type, return appropriate image identifier
-            // I used this just to play around; operations on String are expensive, so approach I proposed in line before is totally OK)
             String imageUri = "@drawable/med_types_" + String.valueOf(currentAlarmTime.getAlarm().getMedicine().getMedicineType().getValue());
             int imageResource = getResources().getIdentifier(imageUri, null, getPackageName());
-            medicineTypeIcon.setImageResource(imageResource);
-
-            // We don't have to create new variable if we want just to set text to TextView,
-            // so next three lines set text to three different TextViews
-            ((TextView) row.findViewById(R.id.txtMedicineName)).setText(currentAlarmTime.getAlarm().getMedicine().getName());
-            ((TextView) row.findViewById(R.id.txtDosage)).setText(currentAlarmTime.getAlarm().getMedicine().getDosage());
-            ((TextView) row.findViewById(R.id.txtNextTimeOfAlarm)).setText(currentAlarmTime.getMomentOfAlarm().toString());
+            viewHolder.imageMedicineType.setImageResource(imageResource);
+            viewHolder.txtMedicineName.setText(currentAlarmTime.getAlarm().getMedicine().getName());
+            viewHolder.txtDosage.setText(currentAlarmTime.getAlarm().getMedicine().getDosage());
+            viewHolder.txtNextTimeOfAlarm.setText(currentAlarmTime.getMomentOfAlarm().toString());
 
             return row;
         }
