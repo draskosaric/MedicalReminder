@@ -125,11 +125,27 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private static class ViewHolder {
+    private class ViewHolder {
         public ImageView imageMedicineType;
         public TextView txtMedicineName;
         public TextView txtDosage;
         public TextView txtNextTimeOfAlarm;
+
+        public ViewHolder(View row) {
+            imageMedicineType = (ImageView) row.findViewById(R.id.imageMedicineType);
+            txtMedicineName = (TextView) row.findViewById(R.id.txtMedicineName);
+            txtDosage = (TextView) row.findViewById(R.id.txtDosage);
+            txtNextTimeOfAlarm = (TextView) row.findViewById(R.id.txtNextTimeOfAlarm);
+        }
+
+        public void bind(AlarmTime alarmTime) {
+            String imageUri = "@drawable/med_types_" + String.valueOf(alarmTime.getAlarm().getMedicine().getMedicineType().getValue());
+            int imageResource = getResources().getIdentifier(imageUri, null, getPackageName());
+            imageMedicineType.setImageResource(imageResource);
+            txtMedicineName.setText(alarmTime.getAlarm().getMedicine().getName());
+            txtDosage.setText(alarmTime.getAlarm().getMedicine().getDosage());
+            txtNextTimeOfAlarm.setText(alarmTime.getMomentOfAlarm().toString());
+        }
     }
 
 
@@ -160,25 +176,14 @@ public class MainActivity extends ActionBarActivity {
             }
 
             if (row.getTag() == null) {
-                viewHolder = new ViewHolder();
-                viewHolder.imageMedicineType = (ImageView) row.findViewById(R.id.imageMedicineType);
-                viewHolder.txtMedicineName = (TextView) row.findViewById(R.id.txtMedicineName);
-                viewHolder.txtDosage = (TextView) row.findViewById(R.id.txtDosage);
-                viewHolder.txtNextTimeOfAlarm = (TextView) row.findViewById(R.id.txtNextTimeOfAlarm);
+                viewHolder = new ViewHolder(row);
                 row.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) row.getTag();
             }
 
             AlarmTime currentAlarmTime = alarmTimes.get(position);
-
-            String imageUri = "@drawable/med_types_" + String.valueOf(currentAlarmTime.getAlarm().getMedicine().getMedicineType().getValue());
-            int imageResource = getResources().getIdentifier(imageUri, null, getPackageName());
-            viewHolder.imageMedicineType.setImageResource(imageResource);
-            viewHolder.txtMedicineName.setText(currentAlarmTime.getAlarm().getMedicine().getName());
-            viewHolder.txtDosage.setText(currentAlarmTime.getAlarm().getMedicine().getDosage());
-            viewHolder.txtNextTimeOfAlarm.setText(currentAlarmTime.getMomentOfAlarm().toString());
-
+            viewHolder.bind(currentAlarmTime);
             return row;
         }
     }
