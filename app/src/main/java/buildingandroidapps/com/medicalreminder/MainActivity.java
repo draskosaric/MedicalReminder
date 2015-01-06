@@ -1,5 +1,7 @@
 package buildingandroidapps.com.medicalreminder;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +12,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,11 +27,12 @@ import buildingandroidapps.com.medicalreminder.models.AlarmTime;
 import buildingandroidapps.com.medicalreminder.models.Medicine;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     private TextView txtNumberOfAlarms;
     private ArrayList<AlarmTime> alarmTimes;
     private CustomAdapter customAdapter;
+    private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,14 @@ public class MainActivity extends ActionBarActivity {
     private void initViews() {
         txtNumberOfAlarms = (TextView) findViewById(R.id.number_of_alarms);
         txtNumberOfAlarms.setText(getString(R.string.none));
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.addButton);
+        final Context scope = this;
+        floatingActionButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(scope, "FloatingActionButton clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
