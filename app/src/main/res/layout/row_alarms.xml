@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_margin="@dimen/layout_row_margin" android:background="@color/accent_material_light"
+    >
 
     <ImageView
         android:layout_width="@dimen/image_row_width"
         android:layout_height="@dimen/image_row_height"
+        android:layout_marginRight="@dimen/image_row_margin"
         android:id="@+id/imageMedicineType"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"

@@ -36,7 +36,7 @@ public class AlarmTime implements Comparable<AlarmTime>{
     public static Comparator<AlarmTime> AlarmTimeDateComparator  = new Comparator<AlarmTime>() {
         @Override
         public int compare(AlarmTime lhs, AlarmTime rhs) {
-            return lhs.getMomentOfAlarm().compareTo(rhs.getMomentOfAlarm());
+            return lhs.momentOfAlarm.compareTo(rhs.momentOfAlarm);
         }
     };
 }
