@@ -3,6 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="image_row_height">64dp</dimen>
-    <dimen name="image_row_width">64dp</dimen>
+    <dimen name="image_row_height">48dp</dimen>
+    <dimen name="image_row_width">48dp</dimen>
+    <dimen name="image_row_margin">16dp</dimen>
+    <dimen name="layout_row_margin">10dp</dimen>
 </resources>

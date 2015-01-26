@@ -1,26 +1,25 @@
 package buildingandroidapps.com.medicalreminder;
 
 import android.app.Activity;
-import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 
+import buildingandroidapps.com.medicalreminder.adapters.AlarmListAdapter;
 import buildingandroidapps.com.medicalreminder.enums.MedicineTypes;
 import buildingandroidapps.com.medicalreminder.models.Alarm;
 import buildingandroidapps.com.medicalreminder.models.AlarmTime;
@@ -33,6 +32,8 @@ public class MainActivity extends Activity {
     private ArrayList<AlarmTime> alarmTimes;
     private CustomAdapter customAdapter;
     private FloatingActionButton floatingActionButton;
+    private RecyclerView recyclerView;
+    private AlarmListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,21 +49,25 @@ public class MainActivity extends Activity {
         txtNumberOfAlarms = (TextView) findViewById(R.id.number_of_alarms);
         txtNumberOfAlarms.setText(getString(R.string.none));
         floatingActionButton = (FloatingActionButton) findViewById(R.id.addButton);
-        final Context scope = this;
         floatingActionButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(scope, "FloatingActionButton clicked", Toast.LENGTH_SHORT).show();
+                for (AlarmTime alarmTime : getAlarmTimes(getAlarm(1)) ) {
+                    adapter.addAlarmTime(alarmTime);
+                }
             }
         });
-
     }
 
     private void showData() {
-        ListView listView = (ListView) findViewById(R.id.list_of_alarms);
-        customAdapter = new CustomAdapter();
-        listView.setAdapter(customAdapter);
+        recyclerView = (RecyclerView) findViewById(R.id.list_of_alarms);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new AlarmListAdapter(alarmTimes, this);
+        recyclerView.setAdapter(adapter);
         updateTxtNumberOfAlarms();
+
     }
 
     private void updateTxtNumberOfAlarms() {
@@ -76,6 +81,10 @@ public class MainActivity extends Activity {
             Alarm alarm = getAlarm(i);
             alarmTimes.addAll(getAlarmTimes(alarm));
         }
+        sortAlarms();
+    }
+
+    private void sortAlarms() {
         Collections.sort(alarmTimes);
     }
 
